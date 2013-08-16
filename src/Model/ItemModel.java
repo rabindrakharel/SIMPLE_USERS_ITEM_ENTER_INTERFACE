@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
-import BaseBox.BaseContainer;
+import SimpleItemEnterInterface.BaseContainer;
 
 /**
  *
@@ -119,15 +119,21 @@ public class ItemModel {
    statement.executeUpdate(query);
    }
    
-   public void updatePriceByItem(String ITEM,String PRICE) throws SQLException
+   public void updatePriceByItem(String ITEM,String PRICE,String PRICECHANGE) throws SQLException
    {
-   String query="update  item_dim set PRICE="+PRICE+",PRICECHANGE=1  where ITEM="+ITEM+";";
+   String query="update  item_dim set PRICE="+PRICE+",PRICECHANGE="+PRICECHANGE+"  where ITEM='"+ITEM+"';";
+   statement.executeUpdate(query);
+   }
+   
+   public void updatePriceFlagByItem(String ITEM,String PRICECHANGE) throws SQLException
+   {
+   String query="update  item_dim set PRICECHANGE="+PRICECHANGE+"  where ITEM='"+ITEM+"';";
    statement.executeUpdate(query);
    }
    
    public void updateStockByItem(String ITEM,String STOCK) throws SQLException
    {
-   String query="update  item_dim set STOCK="+STOCK+" where ITEM="+ITEM+";";
+   String query="update  item_dim set STOCK="+STOCK+" where ITEM='"+ITEM+"';";
    statement.executeUpdate(query);
    }
  

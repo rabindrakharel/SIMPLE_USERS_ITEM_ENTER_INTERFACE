@@ -8,7 +8,7 @@
  *
  * Created on Nov 14, 2012, 7:21:23 AM
  */
-package BaseBox;
+package SimpleItemEnterInterface;
 
 import Model.ItemModel;
 import java.awt.Desktop;
@@ -40,7 +40,7 @@ public class UserProgram extends javax.swing.JPanel{
         userBanner.setIcon(new ImageIcon(ImageIO.read(new File("kadiansmall.jpg"))));
         userBanner.setVisible(false);
         userBanner.setVisible(true);
-        ArrayList<String> str=im.getItemDetailByINIT();
+        ArrayList<String> str=im.getItemDetailByIter(""+UserProgram.iteration);
             descriptionLabel.setText(str.get(0));
             itemLabel.setText(str.get(1));
             priceLabel.setText(str.get(2));
@@ -49,6 +49,16 @@ public class UserProgram extends javax.swing.JPanel{
             urlLabel.setText(str.get(3));
             urlLabel.setVisible(false);            
             urlLabel.setVisible(true);
+            stock=str.get(4);
+           if("0".equals(str.get(4)))
+           {outofstock.setSelected(true);
+            instock.setSelected(false);
+            
+           }
+           if("1".equals(str.get(4)))
+           {outofstock.setSelected(false);
+            instock.setSelected(true);
+           }
             
     }
 
@@ -81,7 +91,7 @@ public class UserProgram extends javax.swing.JPanel{
         urlLabel = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         NewPriceLabel = new javax.swing.JLabel();
-        outofstock = new javax.swing.JRadioButton();
+        instock = new javax.swing.JRadioButton();
         pricechanged = new javax.swing.JRadioButton();
         jLabel20 = new javax.swing.JLabel();
         priceLabel = new javax.swing.JLabel();
@@ -102,6 +112,7 @@ public class UserProgram extends javax.swing.JPanel{
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
+        outofstock = new javax.swing.JRadioButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
@@ -249,13 +260,13 @@ public class UserProgram extends javax.swing.JPanel{
         add(NewPriceLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 480, 80, 30));
         NewPriceLabel.setVisible(false);
 
-        outofstock.setText("Out Of  Stock");
-        outofstock.addChangeListener(new javax.swing.event.ChangeListener() {
+        instock.setText("In Stock");
+        instock.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                outofstockStateChanged(evt);
+                instockStateChanged(evt);
             }
         });
-        add(outofstock, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 440, -1, -1));
+        add(instock, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 440, -1, -1));
 
         pricechanged.setText(" Changed");
         pricechanged.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -342,6 +353,14 @@ public class UserProgram extends javax.swing.JPanel{
         jLabel17.setForeground(new java.awt.Color(204, 204, 255));
         jLabel17.setText("Business Intelligence");
         add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 640, -1, -1));
+
+        outofstock.setText("Out Of  Stock");
+        outofstock.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                outofstockStateChanged(evt);
+            }
+        });
+        add(outofstock, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 440, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void itemLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemLabelActionPerformed
@@ -428,22 +447,28 @@ else {
 
     private void printButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printButtonActionPerformed
         try { 
+           
             
+            try {
+                    im.updateStockByItem(itemLabel.getText(),stock);
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserProgram.class.getName()).log(Level.SEVERE, null, ex);
+                }
             
-            if(stock.equals("0"))
+            if(pricechanged.isSelected() && newPriceField.getText().length()>0)
             {
                 try {
-                    im.updateStockByItem(itemLabel.getText(),stock);
+                    im.updatePriceByItem(itemLabel.getText(),newPriceField.getText(),"1");
                 } catch (SQLException ex) {
                     Logger.getLogger(UserProgram.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
             }
             
-            if(newPriceField.getText().length()>0)
+            if(!pricechanged.isSelected())
             {
                 try {
-                    im.updatePriceByItem(itemLabel.getText(),newPriceField.getText());
+                    im.updatePriceFlagByItem(itemLabel.getText(),"0");
                 } catch (SQLException ex) {
                     Logger.getLogger(UserProgram.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -451,14 +476,14 @@ else {
             }
             
                      descriptionLabel.setText("");
-                     itemLabel.setText("Type and hit enter");
+                     itemLabel.setText("");
                      priceLabel.setText("0.00");
                      urlLabel.setText("http://");
                      successLabel.setVisible(true);
-                     newPriceField.setText("");
-                     ArrayList<String> str=im.getItemDetailByIter(""+(++UserProgram.iteration));
+                     newPriceField.setText("");                                  
+                     ArrayList<String> str=im.getItemDetailByIter(""+(UserProgram.iteration+1));
                      System.out.println(str);
-                      updateCount.setText(""+(iteration));
+                      updateCount.setText(""+(iteration+1));
                     if(!"".equals(str.get(1).trim()))
                      {                    
                      descriptionLabel.setText(str.get(0));
@@ -469,12 +494,13 @@ else {
                      urlLabel.setText(str.get(3));
                      urlLabel.setVisible(false);            
                      urlLabel.setVisible(true);
-                     iteration++;
+                     UserProgram.iteration++;        
                      }
                      else{
                           successLabel.setVisible(true);
                           new javax.swing.JOptionPane().showMessageDialog(this,"Thats it ! There are no more records in database!!"); 
                      }
+                    
         } catch (SQLException ex) {
             Logger.getLogger(UserProgram.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -528,12 +554,26 @@ newPriceField.setVisible(false);
 }// TODO add your handling code here:
     }//GEN-LAST:event_pricechangedStateChanged
 
+    private void instockStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_instockStateChanged
+if(instock.isSelected())        
+{
+stock="1";
+outofstock.setSelected(false);
+}
+else {
+    
+    stock="0";}// TODO add your handling code here:
+    }//GEN-LAST:event_instockStateChanged
+
     private void outofstockStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_outofstockStateChanged
-if(outofstock.isSelected())        
+       if(outofstock.isSelected())        
 {
 stock="0";
+instock.setSelected(false);
 }
-else stock="1";// TODO add your handling code here:
+else {
+    
+    stock="1";} // TODO add your handling code here:
     }//GEN-LAST:event_outofstockStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -547,6 +587,7 @@ else stock="1";// TODO add your handling code here:
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
+    private javax.swing.JRadioButton instock;
     private javax.swing.JTextField itemLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;

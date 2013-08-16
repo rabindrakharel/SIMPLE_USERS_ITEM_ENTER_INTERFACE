@@ -10,7 +10,7 @@
  */
 package Reporting;
 
-import BaseBox.UserProgram;
+import SimpleItemEnterInterface.UserProgram;
 import Model.ItemModel;
 import java.awt.Desktop;
 import java.io.IOException;
@@ -67,8 +67,6 @@ private ItemModel im;
         jScrollPane3 = new javax.swing.JScrollPane();
         inventoryTable1 = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
-        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 6), new java.awt.Dimension(0, 6), new java.awt.Dimension(32767, 6));
-        filler8 = new javax.swing.Box.Filler(new java.awt.Dimension(3, 0), new java.awt.Dimension(3, 0), new java.awt.Dimension(3, 32767));
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -115,12 +113,6 @@ private ItemModel im;
 
         jLabel9.setText("Item Number");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
-
-        filler5.setBorder(new javax.swing.border.SoftBevelBorder(0));
-        jPanel1.add(filler5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 10, 140));
-
-        filler8.setBorder(new javax.swing.border.SoftBevelBorder(0));
-        jPanel1.add(filler8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 760, 10));
 
         jLabel10.setText("Desription");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 70, -1));
@@ -265,8 +257,6 @@ private ItemModel im;
        
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField descriptionLabel;
-    private javax.swing.Box.Filler filler5;
-    private javax.swing.Box.Filler filler8;
     private javax.swing.JTable inventoryTable;
     private javax.swing.JTable inventoryTable1;
     private javax.swing.JTextField itemLabel;

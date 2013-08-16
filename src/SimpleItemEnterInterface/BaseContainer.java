@@ -8,7 +8,7 @@
  *
  * Created on Nov 14, 2012, 7:33:36 PM
  */
-package BaseBox;
+package SimpleItemEnterInterface;
 
 import Reporting.Database;
 import Reporting.SearchableDatabase;

@@ -8,7 +8,7 @@
  *
  * Created on Nov 14, 2012, 7:21:23 AM
  */
-package BaseBox;
+package SimpleItemEnterInterface;
 
 
 import Model.ItemModel;
@@ -81,11 +81,6 @@ public class AdminProgram extends javax.swing.JPanel{
         warningLabel = new javax.swing.JLabel();
         adminBanner = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        resetButton = new javax.swing.JButton();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
         filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 18), new java.awt.Dimension(0, 18), new java.awt.Dimension(32767, 18));
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -367,42 +362,6 @@ public class AdminProgram extends javax.swing.JPanel{
         add(adminBanner, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 420, 160));
         add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, 610, 20));
 
-        resetButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        resetButton.setForeground(new java.awt.Color(0, 0, 255));
-        resetButton.setText("New ");
-        resetButton.setActionCommand("");
-        resetButton.setBorder(new javax.swing.border.SoftBevelBorder(0));
-        resetButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                resetButtonActionPerformed(evt);
-            }
-        });
-        add(resetButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 90, 60, 20));
-
-        jLabel17.setBackground(new java.awt.Color(0, 153, 102));
-        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(0, 51, 204));
-        jLabel17.setText(" Price");
-        add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, 50, 20));
-
-        jLabel19.setBackground(new java.awt.Color(0, 153, 102));
-        jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(0, 51, 204));
-        jLabel19.setText("URL");
-        add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 50, 20));
-
-        jLabel20.setBackground(new java.awt.Color(0, 153, 102));
-        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(0, 51, 204));
-        jLabel20.setText("Item");
-        add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 40, 20));
-
-        jLabel21.setBackground(new java.awt.Color(0, 153, 102));
-        jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(0, 51, 204));
-        jLabel21.setText("Description");
-        add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 100, 20));
-
         filler3.setBorder(new javax.swing.border.SoftBevelBorder(0));
         add(filler3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 90, 10, 640));
     }// </editor-fold>//GEN-END:initComponents
@@ -560,31 +519,6 @@ warningLabel.setText(" ");
 }
   // TODO add your handling code here:
     }//GEN-LAST:event_itemnoFieldFocusLost
-
-    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
-
-        try {
-billHeight=30;
-            descriptionField.setText("");
-            warningLabel.setText("");
-            priceField.setText("");
-                   
-                        ItemModel pm=new ItemModel();
-            ArrayList<String> a=new ArrayList<String>();
-            a.add(" ");
-            descriptionList.setListData(a.toArray());
-            urlList.setListData(a.toArray());
-            itemList.setListData(a.toArray());
-            priceList.setListData(a.toArray());
-            totalAmount=new Float(0);
-            billData =new ArrayList<ArrayList<String>>();
-            successLabel.setVisible(false);
-
-            // TODO add your handling code here:
-        } catch (SQLException ex) {
-            Logger.getLogger(AdminProgram.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_resetButtonActionPerformed
 
     private void priceFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_priceFieldKeyReleased
  if(!priceField.getText().matches("[0-9]*\\.?[0-9]*"))
@@ -804,10 +738,6 @@ else stock="0";
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
@@ -820,7 +750,6 @@ else stock="0";
     private javax.swing.JList priceList;
     private javax.swing.JButton printButton;
     private javax.swing.JButton pushButton;
-    private javax.swing.JButton resetButton;
     private javax.swing.JCheckBox stockStatus;
     private javax.swing.JLabel successLabel;
     private javax.swing.JTextField urlField;

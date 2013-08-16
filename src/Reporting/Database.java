@@ -11,6 +11,11 @@
 package Reporting;
 
 import Model.ItemModel;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -22,7 +27,7 @@ import javax.swing.table.DefaultTableModel;
  * @author paradise lost
  */
 public class Database extends javax.swing.JPanel {
-
+Vector<Vector<String>> resultSet;
     /** Creates new form Inventory */
     public Database() throws SQLException {
         dft=new DefaultTableModel();
@@ -32,7 +37,7 @@ public class Database extends javax.swing.JPanel {
         dft.addColumn("URL");        
         dft.addColumn("Stock");
         ItemModel im=new ItemModel();        
-        Vector<Vector<String>> resultSet=im.getAllItemDetails("asc");
+        resultSet=im.getAllItemDetails();
         for(Vector<String> list : resultSet)
         {
             dft.addRow(list);
@@ -55,8 +60,7 @@ public class Database extends javax.swing.JPanel {
         jTable1 = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        generateReport = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         inventoryTable = new javax.swing.JTable();
 
@@ -80,90 +84,72 @@ public class Database extends javax.swing.JPanel {
         jLabel1.setText("Database");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
 
-        jButton1.setText("Alphabetical");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        generateReport.setText("Generate Report");
+        generateReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                generateReportActionPerformed(evt);
             }
         });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 660, 120, -1));
-
-        jButton2.setText("Stock Wise");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 660, 110, -1));
+        add(generateReport, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 580, 140, 30));
 
         inventoryTable.setModel(dft);
         jScrollPane2.setViewportView(inventoryTable);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 750, 638));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 750, 540));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//        try {
-//           dft=new DefaultTableModel();
-//         dft.addColumn("Desc");
-//        dft.addColumn("Item");
-//        dft.addColumn("Price");
-//        dft.addColumn("URL");        
-//        dft.addColumn("Stock");
-//        ItemModel im=new ItemModel();        
-//        Vector<Vector<String>> resultSet=im.getAllItemDetails();
-//        for(Vector<String> list : resultSet)
-//        {
-//            dft.addRow(list);
-//        }
-//        inventoryTable.setModel(dft);
-//        jScrollPane2.setViewportView(inventoryTable);
-//        jScrollPane3.setViewportView(jScrollPane2);
-//     this.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 750, 638));
-//     this.invalidate();
-//     this.validate();
-//     setVisible(true);   
-//     this.repaint();
-//        
-//        
-//// TODO add your handling code here:
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-        private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-//        try {
-//         dft=new DefaultTableModel();
-//        dft.addColumn("Desc");
-//        dft.addColumn("Item");
-//        dft.addColumn("Price");
-//        dft.addColumn("URL");        
-//        dft.addColumn("Stock");
-//        ItemModel im=new ItemModel();        
-//        Vector<Vector<String>> resultSet=im.getAllItemDetails("asc");
-//        for(Vector<String> list : resultSet)
-//        {
-//            dft.addRow(list);
-//        }
-//     
-//        inventoryTable.setModel(dft);
-//        jScrollPane2.setViewportView(inventoryTable);
-//        jScrollPane3.setViewportView(jScrollPane2);
-//     this.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 750, 638));
-//     this.invalidate();
-//     this.validate();
-//     setVisible(true);   
-//     this.repaint();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        }//GEN-LAST:event_jButton2ActionPerformed
+        private void generateReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateReportActionPerformed
+    PrintWriter f0 = null;
+    try {
+        f0 = new PrintWriter(new FileWriter("Report.csv"));
+        f0.println("Description,Item,Price,URL,Stock");
+        for(Vector<String> list : resultSet)
+               {
+                   
+                   f0.println(list.toString().replace("[","").replace("]",""));
+                   
+               }
+        f0.close();
+        if (Desktop.isDesktopSupported())
+            {
+                Desktop.getDesktop().open(new File("Report.csv"));
+               
+            }
+                   //        try {
+       //         dft=new DefaultTableModel();
+       //        dft.addColumn("Desc");
+       //        dft.addColumn("Item");
+       //        dft.addColumn("Price");
+       //        dft.addColumn("URL");        
+       //        dft.addColumn("Stock");
+       //        ItemModel im=new ItemModel();        
+       //        Vector<Vector<String>> resultSet=im.getAllItemDetails("asc");
+       //        for(Vector<String> list : resultSet)
+       //        {
+       //            dft.addRow(list);
+       //        }
+       //     
+       //        inventoryTable.setModel(dft);
+       //        jScrollPane2.setViewportView(inventoryTable);
+       //        jScrollPane3.setViewportView(jScrollPane2);
+       //     this.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 750, 638));
+       //     this.invalidate();
+       //     this.validate();
+       //     setVisible(true);   
+       //     this.repaint();
+       //        } catch (SQLException ex) {
+       //        }
+       //        }
+    } catch (IOException ex) {
+        Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+    } finally {
+        f0.close();
+    }
+        }//GEN-LAST:event_generateReportActionPerformed
        
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton generateReport;
     private javax.swing.JTable inventoryTable;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
