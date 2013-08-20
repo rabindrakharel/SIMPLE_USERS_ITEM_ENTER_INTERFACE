@@ -17,7 +17,9 @@ public class Connector {
     public Connector(){
     try{
     Class.forName("com.mysql.jdbc.Driver");
-    connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/retail_db","root","");
+   // connection=DriverManager.getConnection("jdbc:mysql://mysql6.000webhost.com:3306/a4309023_kd","a4309023_kd","asdf123456789");
+   connection=DriverManager.getConnection("jdbc:mysql://mysql6.000webhost.com:3306/a4309023_retail","a4309023_retMic","a4309023_retMicrabin");
+    
     }
     catch(Exception ex)
     {
@@ -30,6 +32,12 @@ public class Connector {
         return st;
         // comments here
         
+    }
+    
+    public static void main(String args[])
+    {
+    Connector c1=new Connector();
+    System.out.print("successful");
     }
     
 }

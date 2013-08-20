@@ -130,10 +130,18 @@ public class ItemModel {
    String query="update  item_dim set PRICECHANGE="+PRICECHANGE+"  where ITEM='"+ITEM+"';";
    statement.executeUpdate(query);
    }
-   
+   //deleteRecordByItem
    public void updateStockByItem(String ITEM,String STOCK) throws SQLException
    {
    String query="update  item_dim set STOCK="+STOCK+" where ITEM='"+ITEM+"';";
+   statement.executeUpdate(query);
+   }
+   
+   
+   
+   public void deleteRecordByItem(String ITEM) throws SQLException
+   {
+   String query="DELETE FROM `retail_db`.`item_dim` WHERE `item_dim`.`ITEM` = '"+ITEM+"';";
    statement.executeUpdate(query);
    }
  
@@ -178,13 +186,26 @@ public class ItemModel {
          list.addElement(rs.getString("PRICE"));
          list.addElement(rs.getString("URL"));
          list.addElement(rs.getString("STOCK"));
-         resultSet.addElement(list);
-     
-     }
-    
+         resultSet.addElement(list);     
+     }    
     return resultSet; 
         
     
     }
   
+       
+         public String getTotalRows() throws SQLException
+    { Vector<Vector<String>> resultSet=new Vector<Vector<String>>();
+    String que="SELECT count(*) as counte\n" +
+"FROM `item_dim`;";
+    ResultSet rs=statement.executeQuery(que);
+    String value=" ";
+    while(rs.next())
+     { 
+        value=rs.getString("counte");
+     }
+    
+    return value; 
+        
+    }
 }

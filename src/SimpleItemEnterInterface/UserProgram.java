@@ -50,15 +50,15 @@ public class UserProgram extends javax.swing.JPanel{
             urlLabel.setVisible(false);            
             urlLabel.setVisible(true);
             stock=str.get(4);
-           if("0".equals(str.get(4)))
-           {outofstock.setSelected(true);
-            instock.setSelected(false);
-            
-           }
-           if("1".equals(str.get(4)))
-           {outofstock.setSelected(false);
-            instock.setSelected(true);
-           }
+           updateCountlabelTot.setText(im.getTotalRows());
+//           if("0".equals(str.get(4)))
+//           {outofstock.setSelected(true);
+//            instock.setSelected(false);
+//                       }
+//           if("1".equals(str.get(4)))
+//           {outofstock.setSelected(false);
+//            instock.setSelected(true);
+//           }
             
     }
 
@@ -96,7 +96,7 @@ public class UserProgram extends javax.swing.JPanel{
         jLabel20 = new javax.swing.JLabel();
         priceLabel = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        updateCount = new javax.swing.JLabel();
+        updateCountlabelTot = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 11), new java.awt.Dimension(0, 11), new java.awt.Dimension(32767, 11));
@@ -113,6 +113,8 @@ public class UserProgram extends javax.swing.JPanel{
         jLabel12 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         outofstock = new javax.swing.JRadioButton();
+        updateCount = new javax.swing.JLabel();
+        updateCountlabel1 = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
@@ -293,11 +295,10 @@ public class UserProgram extends javax.swing.JPanel{
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Total Updates");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 200, 140, 30));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 190, 140, 30));
 
-        updateCount.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        updateCount.setText("0");
-        add(updateCount, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 145, 100, 40));
+        updateCountlabelTot.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        add(updateCountlabelTot, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 140, 80, 40));
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 610, 10));
         add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 310, 10));
         add(filler1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, -1, -1));
@@ -361,6 +362,15 @@ public class UserProgram extends javax.swing.JPanel{
             }
         });
         add(outofstock, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 440, -1, -1));
+
+        updateCount.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        updateCount.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        updateCount.setText("0");
+        add(updateCount, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 140, 90, 40));
+
+        updateCountlabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        updateCountlabel1.setText("out of ");
+        add(updateCountlabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 140, 70, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void itemLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemLabelActionPerformed
@@ -448,7 +458,8 @@ else {
     private void printButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printButtonActionPerformed
         try { 
            
-            
+            if(instock.isSelected() || outofstock.isSelected())
+            {
             try {
                     im.updateStockByItem(itemLabel.getText(),stock);
                 } catch (SQLException ex) {
@@ -486,6 +497,7 @@ else {
                       updateCount.setText(""+(iteration+1));
                     if(!"".equals(str.get(1).trim()))
                      {                    
+                        
                      descriptionLabel.setText(str.get(0));
                      itemLabel.setText(str.get(1));
                      priceLabel.setText(str.get(2));
@@ -494,13 +506,33 @@ else {
                      urlLabel.setText(str.get(3));
                      urlLabel.setVisible(false);            
                      urlLabel.setVisible(true);
+                     pricechanged.setSelected(false);
+                     instock.setSelected(false);
+                     outofstock.setSelected(false);
                      UserProgram.iteration++;        
                      }
-                     else{
+                     else{ UserProgram.iteration=0;
+            ArrayList<String> st=im.getItemDetailByIter(""+UserProgram.iteration);
+            descriptionLabel.setText(str.get(0));
+            itemLabel.setText(st.get(1));
+            priceLabel.setText(st.get(2));
+            priceLabel.setVisible(false);            
+            priceLabel.setVisible(true);
+            urlLabel.setText(st.get(3));
+            urlLabel.setVisible(false);            
+            urlLabel.setVisible(true);
+            stock=st.get(4);
+            pricechanged.setSelected(false);
+                     instock.setSelected(false);
+                     outofstock.setSelected(false);
                           successLabel.setVisible(true);
-                          new javax.swing.JOptionPane().showMessageDialog(this,"Thats it ! There are no more records in database!!"); 
+                          new javax.swing.JOptionPane().showMessageDialog(this,"One Loop of database update is complete! Continue updating."); 
                      }
+            }
+            else
+                new javax.swing.JOptionPane().showMessageDialog(this,"Select at least a value for stock, Either instock or out of stock"); 
                     
+            
         } catch (SQLException ex) {
             Logger.getLogger(UserProgram.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -616,6 +648,8 @@ else {
     private javax.swing.JButton printButton;
     private javax.swing.JLabel successLabel;
     private javax.swing.JLabel updateCount;
+    private javax.swing.JLabel updateCountlabel1;
+    private javax.swing.JLabel updateCountlabelTot;
     private javax.swing.JLabel urlLabel;
     private javax.swing.JLabel userBanner;
     private javax.swing.JLabel warningLabel;

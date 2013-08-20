@@ -78,7 +78,7 @@ Vector<Vector<String>> resultSet;
         jScrollPane1.setViewportView(jTable1);
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 19, -1, 640));
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 19, 730, 640));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Database");
@@ -95,7 +95,7 @@ Vector<Vector<String>> resultSet;
         inventoryTable.setModel(dft);
         jScrollPane2.setViewportView(inventoryTable);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 750, 540));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 730, 540));
     }// </editor-fold>//GEN-END:initComponents
 
         private void generateReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateReportActionPerformed

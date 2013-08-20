@@ -13,6 +13,7 @@ package Reporting;
 import SimpleItemEnterInterface.UserProgram;
 import Model.ItemModel;
 import java.awt.Desktop;
+import static java.awt.image.ImageObserver.WIDTH;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -61,13 +62,9 @@ private ItemModel im;
         jTable1 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         inventoryTable = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         inventoryTable1 = new javax.swing.JTable();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         priceLabel = new javax.swing.JLabel();
@@ -77,6 +74,9 @@ private ItemModel im;
         warningLabel = new javax.swing.JLabel();
         descriptionLabel = new javax.swing.JTextField();
         urlLabel = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        deletemode = new javax.swing.JRadioButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -94,15 +94,14 @@ private ItemModel im;
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         inventoryTable.setModel(dft);
+        inventoryTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inventoryTableMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(inventoryTable);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 138, 730, 550));
-
-        jLabel2.setText("Item Number");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
-
-        jLabel3.setText("Desription");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 70, -1));
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -111,26 +110,20 @@ private ItemModel im;
 
         jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 138, 730, 550));
 
-        jLabel9.setText("Item Number");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
-
-        jLabel10.setText("Desription");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 70, -1));
-
         jLabel11.setText("PRICE(USD)");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, 70, 20));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, 70, 20));
 
         jLabel12.setText("URL");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, 40, 20));
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 10, 40, 20));
 
         priceLabel.setText("0.00 ");
-        jPanel1.add(priceLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 70, 70, 20));
+        jPanel1.add(priceLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 70, 20));
 
         stockLabel.setText("0");
-        jPanel1.add(stockLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 100, 70, 20));
+        jPanel1.add(stockLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 70, 70, 20));
 
         jLabel4.setText("Stock");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 100, 40, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, 40, -1));
 
         itemLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         itemLabel.setText("Type and hit enter");
@@ -160,17 +153,17 @@ private ItemModel im;
                 itemLabelQuantityKeyTyped(evt);
             }
         });
-        jPanel1.add(itemLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 200, 30));
+        jPanel1.add(itemLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 200, 30));
 
         warningLabel.setForeground(new java.awt.Color(255, 51, 51));
-        jPanel1.add(warningLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, 290, 30));
+        jPanel1.add(warningLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 290, 30));
 
         descriptionLabel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 descriptionLabelActionPerformed(evt);
             }
         });
-        jPanel1.add(descriptionLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 200, 30));
+        jPanel1.add(descriptionLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 200, 30));
 
         urlLabel.setForeground(new java.awt.Color(0, 51, 255));
         urlLabel.setText("http://");
@@ -179,9 +172,18 @@ private ItemModel im;
                 urlLabelMouseClicked(evt);
             }
         });
-        jPanel1.add(urlLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 340, 20));
+        jPanel1.add(urlLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, 340, 20));
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jLabel2.setText("Item Number");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, -1));
+
+        jLabel3.setText("Desription");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 70, -1));
+
+        deletemode.setText("Delete Mode");
+        jPanel1.add(deletemode, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
+
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void descriptionLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descriptionLabelActionPerformed
@@ -247,26 +249,64 @@ private ItemModel im;
 
     private void urlLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_urlLabelMouseClicked
     try {
-        Desktop.getDesktop().browse(new URI(urlLabel.getText()));        
+        Desktop.getDesktop().browse(new URI(urlLabel.getText())); 
+        
               // TODO add your handling code here:
     } catch (URISyntaxException ex) {
         Logger.getLogger(SearchableDatabase.class.getName()).log(Level.SEVERE, null, ex);
     } catch (IOException ex) {
         Logger.getLogger(SearchableDatabase.class.getName()).log(Level.SEVERE, null, ex);}
     }//GEN-LAST:event_urlLabelMouseClicked
+
+    private void inventoryTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inventoryTableMouseClicked
+
+        if(deletemode.isSelected())
+        {try {
+
+            System.out.println(inventoryTable.getValueAt(inventoryTable.getSelectedRow(),inventoryTable.getSelectedColumn()));
+            im.deleteRecordByItem(inventoryTable.getValueAt(inventoryTable.getSelectedRow(),inventoryTable.getSelectedColumn()).toString());
+
+            dft=new DefaultTableModel();
+            dft.addColumn("Desc");
+            dft.addColumn("Item");
+            dft.addColumn("Price");
+            dft.addColumn("URL");
+            dft.addColumn("Stock");
+            ItemModel im=new ItemModel();
+            Vector<Vector<String>> resultSet=im.getAllItemDetails("asc");
+            for(Vector<String> list : resultSet)
+            {
+                dft.addRow(list);
+            }
+
+            inventoryTable.setModel(dft);
+            jScrollPane2.setViewportView(inventoryTable);
+            jScrollPane3.setViewportView(jScrollPane2);
+           ((DefaultTableModel)inventoryTable.getModel()).removeRow(inventoryTable.getSelectedRow());
+             inventoryTable.setVisible(false);
+             inventoryTable.setVisible(true);
+             jScrollPane2.setVisible(false);
+             jScrollPane2.setVisible(true);
+             jScrollPane3.setVisible(false);
+              jScrollPane3.setVisible(true);
+                    
+            // TODO add your handling code here:
+        } catch (SQLException ex) {
+            Logger.getLogger(SearchableDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }}
+    }//GEN-LAST:event_inventoryTableMouseClicked
        
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton deletemode;
     private javax.swing.JTextField descriptionLabel;
     private javax.swing.JTable inventoryTable;
     private javax.swing.JTable inventoryTable1;
     private javax.swing.JTextField itemLabel;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
